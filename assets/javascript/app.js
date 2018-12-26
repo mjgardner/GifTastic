@@ -53,6 +53,13 @@ $(document).ready(function(){
                 }
               });
             card.append(image);
+            var cardBody = $("<div>")
+              .addClass("card-body");
+            var cardText = $("<div>")
+              .addClass("card-text")
+              .text("rating: " + giphyData.rating);
+            cardBody.append(cardText);
+            card.append(cardBody);
             cardColumns.append(card);
           });
           $("#results").append(cardColumns);
