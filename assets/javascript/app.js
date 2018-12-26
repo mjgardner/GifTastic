@@ -14,6 +14,12 @@ var topics = [
   "Family Guy"
 ];
 
+var searchParams = new URLSearchParams(window.location.search);
+var newTopic = searchParams.get("newTopic");
+if (newTopic && topics.indexOf(newTopic) === -1) {
+  topics.push(newTopic);
+}
+
 $(document).ready(function(){
   topics.forEach(function(topic) {
     var topicButton = $("<button>")
@@ -67,4 +73,12 @@ $(document).ready(function(){
       });
     $("#topics").append(topicButton);
   });
+
+  if (newTopic) {
+    $(".topicButton").each(function(){
+      if ($(this).attr("data-topic") === newTopic) {
+        $(this).click();
+      }
+    });
+  }
 });
