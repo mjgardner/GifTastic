@@ -38,12 +38,12 @@ $(document).ready(function(){
             .attr("class", "card-columns");
           response.data.forEach(function(giphyData){
             var card = $("<div>")
-              .attr("class", "card")
-              .attr("style", "width=" + giphyData.images.fixed_width.width + "px");
+              .addClass("card")
+              .css("width", giphyData.images.fixed_width.width + "px");
             var image = $("<img>")
               .attr("src", giphyData.images.fixed_width.url)
-              .attr("class", "card-img-top")
-              .attr("style", "width=" + giphyData.images.fixed_width.width + "px,height=" + giphyData.images.fixed_width.height + "px");
+              .addClass("card-img-top")
+              .css("width", giphyData.images.fixed_width.width + "px", "height", giphyData.images.fixed_width.height + "px");
             card.append(image);
             cardColumns.append(card);
           });
