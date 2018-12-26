@@ -19,8 +19,14 @@ $(document).ready(function(){
     var topicButton = $("<button>")
       .text(topic)
       .attr("data-topic", topic)
-      .attr("class", "btn btn-outline-primary")
+      .addClass("topicButton btn btn-outline-primary")
       .click(function(){
+        $(".topicButton")
+          .removeClass("btn-primary")
+          .addClass("btn-outline-primary");
+        $(this)
+          .removeClass("btn-outline-primary")
+          .addClass("btn-primary");
         $("#results").empty();
         var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + encodeURI(apiKey) + "&limit=10&q=" + encodeURI($(this).attr("data-topic"));
         $.ajax({
