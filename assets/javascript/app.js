@@ -39,11 +39,19 @@ $(document).ready(function(){
           response.data.forEach(function(giphyData){
             var card = $("<div>")
               .addClass("card")
-              .css("width", giphyData.images.fixed_width.width + "px");
+              .css("width", giphyData.images.fixed_width_still.width + "px");
             var image = $("<img>")
-              .attr("src", giphyData.images.fixed_width.url)
+              .attr("src", giphyData.images.fixed_width_still.url)
               .addClass("card-img-top")
-              .css("width", giphyData.images.fixed_width.width + "px", "height", giphyData.images.fixed_width.height + "px");
+              .css("width", giphyData.images.fixed_width_still.width + "px", "height", giphyData.images.fixed_width_still.height + "px")
+              .click(function(){
+                if ($(this).attr("src") === giphyData.images.fixed_width.url) {
+                  $(this).attr("src", giphyData.images.fixed_width_still.url);
+                }
+                else if ($(this).attr("src") === giphyData.images.fixed_width_still.url) {
+                  $(this).attr("src", giphyData.images.fixed_width.url);
+                }
+              });
             card.append(image);
             cardColumns.append(card);
           });
