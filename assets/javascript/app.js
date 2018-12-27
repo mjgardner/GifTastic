@@ -12,13 +12,13 @@ var topics = [
   "Family Guy"
 ];
 
-$(document).ready(function(){
+$(document).ready(function() {
   topics.forEach(addTopicButton);
 
-  $("#add").submit(function(event){
+  $("#add").submit(function(event) {
     var newTopic = $("#newTopic").val();
     var foundTopic = -1;
-    $(".topicButton").each(function(index){
+    $(".topicButton").each(function(index) {
       if ($(this).attr("data-topic") === newTopic) {
         foundTopic = index;
         $(this).click();
@@ -27,7 +27,7 @@ $(document).ready(function(){
     if (foundTopic === -1) {
       topics.push(newTopic);
       addTopicButton(newTopic);
-      $(".topicButton").each(function(index){
+      $(".topicButton").each(function(index) {
         if ($(this).attr("data-topic") === newTopic) {
           $(this).click();
         }
@@ -42,7 +42,7 @@ function addTopicButton(topic) {
     .text(topic)
     .attr("data-topic", topic)
     .addClass("topicButton btn btn-outline-primary")
-    .click(function(){
+    .click(function() {
       $(".topicButton")
         .removeClass("btn-primary")
         .addClass("btn-outline-primary");
@@ -50,19 +50,19 @@ function addTopicButton(topic) {
         .removeClass("btn-outline-primary")
         .addClass("btn-primary");
       $("#results").empty();
-      var queryURL = "https://api.giphy.com/v1/gifs/search?api_key="
-        + encodeURI(apiKey) + "&limit=10&q="
-        + encodeURI($(this).attr("data-topic"));
-      $.ajax({url: queryURL, method: "GET"})
-        .then(buildCards);
+      var queryURL =
+        "https://api.giphy.com/v1/gifs/search?api_key=" +
+        encodeURI(apiKey) +
+        "&limit=10&q=" +
+        encodeURI($(this).attr("data-topic"));
+      $.ajax({ url: queryURL, method: "GET" }).then(buildCards);
     });
   $("#topics").append(topicButton);
 }
 
 function buildCards(response) {
-  var cardColumns = $("<div>")
-    .attr("class", "card-columns");
-  response.data.forEach(function(giphyData){
+  var cardColumns = $("<div>").attr("class", "card-columns");
+  response.data.forEach(function(giphyData) {
     var gifImages = giphyData.images;
     var card = $("<div>")
       .addClass("card")
@@ -71,20 +71,20 @@ function buildCards(response) {
       .attr("src", gifImages.fixed_width_still.url)
       .addClass("card-img-top")
       .css(
-        "width", gifImages.fixed_width_still.width + "px",
-        "height", gifImages.fixed_width_still.height + "px"
+        "width",
+        gifImages.fixed_width_still.width + "px",
+        "height",
+        gifImages.fixed_width_still.height + "px"
       )
-      .click(function(){
+      .click(function() {
         if ($(this).attr("src") === gifImages.fixed_width.url) {
           $(this).attr("src", gifImages.fixed_width_still.url);
-        }
-        else if ($(this).attr("src") === gifImages.fixed_width_still.url) {
+        } else if ($(this).attr("src") === gifImages.fixed_width_still.url) {
           $(this).attr("src", gifImages.fixed_width.url);
         }
       });
     card.append(image);
-    var cardBody = $("<div>")
-      .addClass("card-body");
+    var cardBody = $("<div>").addClass("card-body");
     var cardText = $("<div>")
       .addClass("card-text")
       .text("rating: " + giphyData.rating);
