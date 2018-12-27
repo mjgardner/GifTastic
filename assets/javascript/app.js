@@ -63,7 +63,6 @@ function addTopicButton(topic) {
 function buildCards(response) {
   var cardColumns = $("<div>").attr("class", "card-columns");
   response.data.forEach(function(giphyData) {
-    console.log(giphyData);
     var gifImages = giphyData.images;
     var card = $("<div>")
       .addClass("card")
@@ -92,8 +91,8 @@ function buildCards(response) {
         "<p>rating: " +
           giphyData.rating +
           "</p>" +
-          (giphyData.source
-            ? '<p><a href="' + giphyData.source + '">source</a></p>'
+          (giphyData.source_post_url
+            ? '<p><a href="' + giphyData.source_post_url + '">source</a></p>'
             : "")
       );
     cardBody.append(cardText);
