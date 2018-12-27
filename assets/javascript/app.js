@@ -61,8 +61,7 @@ function addTopicButton(topic) {
 }
 
 function buildCards(response) {
-  var cardColumns = $("<div>")
-    .addClass("card-columns");
+  var cardColumns = $("<div>").addClass("card-columns");
   response.data.forEach(function(giphyData) {
     var gifImages = giphyData.images;
     var card = $("<div>")
