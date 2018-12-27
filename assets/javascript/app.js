@@ -50,41 +50,47 @@ function addTopicButton(topic) {
         .removeClass("btn-outline-primary")
         .addClass("btn-primary");
       $("#results").empty();
-      var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + encodeURI(apiKey) + "&limit=10&q=" + encodeURI($(this).attr("data-topic"));
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).then(function(response){
-        var cardColumns = $("<div>")
-          .attr("class", "card-columns");
-        response.data.forEach(function(giphyData){
-          var card = $("<div>")
-            .addClass("card")
-            .css("width", giphyData.images.fixed_width_still.width + "px");
-          var image = $("<img>")
-            .attr("src", giphyData.images.fixed_width_still.url)
-            .addClass("card-img-top")
-            .css("width", giphyData.images.fixed_width_still.width + "px", "height", giphyData.images.fixed_width_still.height + "px")
-            .click(function(){
-              if ($(this).attr("src") === giphyData.images.fixed_width.url) {
-                $(this).attr("src", giphyData.images.fixed_width_still.url);
-              }
-              else if ($(this).attr("src") === giphyData.images.fixed_width_still.url) {
-                $(this).attr("src", giphyData.images.fixed_width.url);
-              }
-            });
-          card.append(image);
-          var cardBody = $("<div>")
-            .addClass("card-body");
-          var cardText = $("<div>")
-            .addClass("card-text")
-            .text("rating: " + giphyData.rating);
-          cardBody.append(cardText);
-          card.append(cardBody);
-          cardColumns.append(card);
-        });
-        $("#results").append(cardColumns);
-      });
+      var queryURL = "https://api.giphy.com/v1/gifs/search?api_key="
+        + encodeURI(apiKey) + "&limit=10&q="
+        + encodeURI($(this).attr("data-topic"));
+      $.ajax({url: queryURL, method: "GET"})
+        .then(buildCards);
     });
   $("#topics").append(topicButton);
+}
+
+function buildCards(response) {
+  var cardColumns = $("<div>")
+    .attr("class", "card-columns");
+  response.data.forEach(function(giphyData){
+    var gifImages = giphyData.images;
+    var card = $("<div>")
+      .addClass("card")
+      .css("width", gifImages.fixed_width_still.width + "px");
+    var image = $("<img>")
+      .attr("src", gifImages.fixed_width_still.url)
+      .addClass("card-img-top")
+      .css(
+        "width", gifImages.fixed_width_still.width + "px",
+        "height", gifImages.fixed_width_still.height + "px"
+      )
+      .click(function(){
+        if ($(this).attr("src") === gifImages.fixed_width.url) {
+          $(this).attr("src", gifImages.fixed_width_still.url);
+        }
+        else if ($(this).attr("src") === gifImages.fixed_width_still.url) {
+          $(this).attr("src", gifImages.fixed_width.url);
+        }
+      });
+    card.append(image);
+    var cardBody = $("<div>")
+      .addClass("card-body");
+    var cardText = $("<div>")
+      .addClass("card-text")
+      .text("rating: " + giphyData.rating);
+    cardBody.append(cardText);
+    card.append(cardBody);
+    cardColumns.append(card);
+  });
+  $("#results").append(cardColumns);
 }
