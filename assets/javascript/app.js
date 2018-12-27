@@ -85,6 +85,9 @@ function buildCards(response) {
       });
     card.append(image);
     var cardBody = $("<div>").addClass("card-body");
+    var cardTitle = $("<h5>")
+      .addClass("card-title")
+      .text(giphyData.title);
     var cardText = $("<div>")
       .addClass("card-text")
       .html(
@@ -95,7 +98,7 @@ function buildCards(response) {
             ? '<p><a href="' + giphyData.source_post_url + '">source</a></p>'
             : "")
       );
-    cardBody.append(cardText);
+    cardBody.append(cardTitle, cardText);
     card.append(cardBody);
     cardColumns.append(card);
   });
