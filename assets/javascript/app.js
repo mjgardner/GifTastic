@@ -16,7 +16,7 @@ $(document).ready(function() {
   topics.forEach(addTopicButton);
 
   $("#add").submit(function(event) {
-    var newTopic = $("#newTopic").val();
+    var newTopic = $("#newTopic").val().trim();
     var foundTopic = -1;
     $(".topicButton").each(function(index) {
       if ($(this).attr("data-topic") === newTopic) {
